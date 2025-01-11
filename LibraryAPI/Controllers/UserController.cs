@@ -1,5 +1,6 @@
-﻿using LibraryAPI.Areas.Identity.Data;
-using LibraryAPI.Data;
+﻿using LibraryAPI.Data;
+using LibraryAPI.DTO.UserDTOs;
+using LibraryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,39 +10,50 @@ namespace LibraryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase 
+    public class UserController(UserService service) : ControllerBase 
     {
-        private readonly AuthContext _dbcontext;
-
-        public UserController(AuthContext context) {
-            this._dbcontext = context;
-        }
 
         // GET: api/<UserController>
         [HttpGet]
-        public async Task<IEnumerable<User>> Get()
+        public async Task<IEnumerable<UserOut>> Get()
         {
-            return await _dbcontext.Users.ToArrayAsync();
+            IEnumerable<User> users = await service.GetUsers();
+            List<UserOut> users_out = new List<UserOut>();
+            foreach (User user in users)
+            {
+                UserOut user_out = new UserOut(user);
+                users_out.Add(user_out);
+            }
+            return users_out;
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<User?> Get(int id)
+        public async Task<UserOut?> Get(string id)
         {
-            User? user = await _dbcontext.Users.FindAsync(id);
+            User? user = await service.GetUser(id);
+
             if (user != null)
             {
-                return user;
+                UserOut user_out = new UserOut(user);
+                return user_out;
             }
             return null;
         }
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task Post([FromBody] User user)
+        public async Task Post([FromBody] UserIn user_dto)
         {
-            await _dbcontext.Users.AddAsync(user);
-            await _dbcontext.SaveChangesAsync();
+            User user = new User
+            {
+                FirstName = user_dto.FirstName,
+                LastName = user_dto.LastName,
+                UserName = user_dto.UserName,
+                Email = user_dto.Email,
+                PhoneNumber = user_dto.PhoneNumber
+            };
+            await service.CreateUser(user);
         }
 
         // PUT api/<UserController>/5

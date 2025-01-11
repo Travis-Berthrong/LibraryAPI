@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LibraryAPI.Areas.Identity.Data;
 using LibraryAPI.Data;
+using LibraryAPI.Services;
 
 namespace LibraryAPI
 {
@@ -16,6 +17,8 @@ namespace LibraryAPI
 
             builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AuthContext>();
 
+            builder.Services.AddScoped<UserService>();
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -26,11 +29,8 @@ namespace LibraryAPI
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
 
