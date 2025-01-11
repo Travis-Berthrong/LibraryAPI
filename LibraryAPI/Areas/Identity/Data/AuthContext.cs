@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using LibraryAPI.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryAPI.Areas.Identity.Data;
 
-public class AuthContext : IdentityDbContext<IdentityUser>
+public class AuthContext : IdentityDbContext<User>
 {
     public AuthContext(DbContextOptions<AuthContext> options)
         : base(options)
