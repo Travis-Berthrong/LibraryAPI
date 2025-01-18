@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LibraryAPI.Data.Enums;
 
 namespace LibraryAPI.Entities.BookDataEntities;
 
@@ -17,7 +16,7 @@ public partial class Reservation
 
     public DateOnly? ReturnDate { get; set; }
 
-    public string ReservationStatus { get; set; } = null!;
+    public ReservationStatus ReservationStatus { get; set; }
 
     public virtual Book Book { get; set; } = null!;
 }

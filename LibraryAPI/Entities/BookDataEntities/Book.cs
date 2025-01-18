@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LibraryAPI.Data.Enums;
 
 namespace LibraryAPI.Entities.BookDataEntities;
 
@@ -17,11 +18,11 @@ public partial class Book
 
     public int PageCount { get; set; }
 
-    public string Genre { get; set; } = null!;
+    public BookGenre Genre { get; set; }
 
-    public int? NumAvailable { get; set; }
+    public int NumAvailable { get; set; }
 
-    public int? NumTotal { get; set; }
+    public int NumTotal { get; set; }
 
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 }

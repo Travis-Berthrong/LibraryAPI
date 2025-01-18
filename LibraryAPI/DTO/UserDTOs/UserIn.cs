@@ -1,12 +1,20 @@
-﻿namespace LibraryAPI.DTO.UserDTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LibraryAPI.DTO.UserDTOs
 {
     public class UserIn
     {
-        public string? UserName { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Email { get; set; }
-        public string? PhoneNumber { get; set; }
+        [Required]
+        public required string UserName { get; set; }
+        [Required]
+        public required string FirstName { get; set; }
+        [Required]
+        public required string LastName { get; set; }
+        [Required]
+        public required string Email { get; set; }
+        [Required]
+        public required string PhoneNumber { get; set; }
+
         public string? Password { get; set; }
     }
 }

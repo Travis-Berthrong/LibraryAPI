@@ -15,7 +15,7 @@ namespace LibraryAPI.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
-        public async Task<IEnumerable<UserOut>> Get()
+        public async Task<IActionResult> Get()
         {
             IEnumerable<User> users = await service.GetUsers();
             List<UserOut> users_out = new List<UserOut>();
@@ -24,26 +24,26 @@ namespace LibraryAPI.Controllers
                 UserOut user_out = new UserOut(user);
                 users_out.Add(user_out);
             }
-            return users_out;
+            return Ok(users_out);
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<UserOut?> Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
             User? user = await service.GetUser(id);
 
             if (user != null)
             {
                 UserOut user_out = new UserOut(user);
-                return user_out;
+                return Ok(user_out);
             }
-            return null;
+            return NotFound();
         }
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task Post([FromBody] UserIn user_dto)
+        public async Task<IActionResult> Post([FromBody] UserIn user_dto)
         {
             User user = new User
             {
@@ -54,6 +54,7 @@ namespace LibraryAPI.Controllers
                 PhoneNumber = user_dto.PhoneNumber
             };
             await service.CreateUser(user);
+            return Ok("User created successfully!");
         }
 
         // PUT api/<UserController>/5
