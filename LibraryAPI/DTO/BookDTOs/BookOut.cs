@@ -3,30 +3,16 @@ using LibraryAPI.Entities.BookDataEntities;
 
 namespace LibraryAPI.DTO.BookDTOs
 {
-    public class BookOut
+    public class BookOut(Book book)
     {
-        public int Id { get; set; }
-        public required string Title { get; set; }
-        public required string Author { get; set; }
-        public string? Description { get; set; }
-        public DateOnly PublicationDate { get; set; }
-        public int PageCount { get; set; }
-        public BookGenre Genre { get; set; }
-        public int NumAvailable { get; set; }
-        public int NumTotal { get; set; }
-
-        public BookOut(Book book)
-        {
-            Id = book.Id;
-            Title = book.Title;
-            Author = book.Author;
-            Description = book.Description;
-            PublicationDate = book.PublicationDate;
-            PageCount = book.PageCount;
-            Genre = book.Genre;
-            NumAvailable = book.NumAvailable;
-            NumTotal = book.NumTotal;
-        }
-
+        public int Id { get; set; } = book.Id;
+        public string Title { get; set; } = book.Title;
+        public string Author { get; set; } = book.Author;
+        public string? Description { get; set; } = book.Description;
+        public DateOnly PublicationDate { get; set; } = book.PublicationDate;
+        public int PageCount { get; set; } = book.PageCount;
+        public BookGenre Genre { get; set; } = book.Genre;
+        public int NumAvailable { get; set; } = book.NumAvailable;
+        public int NumTotal { get; set; } = book.NumTotal;
     }
 }

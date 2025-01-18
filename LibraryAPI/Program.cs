@@ -13,13 +13,15 @@ namespace LibraryAPI
         {
             var builder = WebApplication.CreateBuilder(args);
             var authConnectionString = builder.Configuration.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
-            var bookConnectionString = builder.Configuration.GetConnectionString("BookContextConnection") ?? throw new InvalidOperationException("Connection string 'BookContextConnection' not found.");
+            var bookConnectionString = builder.Configuration.GetConnectionString("BookDataContextConnection") ?? throw new InvalidOperationException("Connection string 'BookContextConnection' not found.");
             builder.Services.AddDbContext<AuthContext>(options => options.UseSqlServer(authConnectionString));
             builder.Services.AddDbContext<BookDataContext>(options => options.UseSqlServer(bookConnectionString));
 
-            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AuthContext>();
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AuthContext>().AddSignInManager<SignInManager<User>>();
+
 
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<BookService>();
 
 
             // Add services to the container.

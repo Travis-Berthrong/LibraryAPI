@@ -43,15 +43,15 @@ namespace LibraryAPI.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserIn user_dto)
+        public async Task<IActionResult> Post([FromBody] UserIn userIn)
         {
             User user = new User
             {
-                FirstName = user_dto.FirstName,
-                LastName = user_dto.LastName,
-                UserName = user_dto.UserName,
-                Email = user_dto.Email,
-                PhoneNumber = user_dto.PhoneNumber
+                FirstName = userIn.FirstName,
+                LastName = userIn.LastName,
+                UserName = userIn.UserName,
+                Email = userIn.Email,
+                PhoneNumber = userIn.PhoneNumber
             };
             await service.CreateUser(user);
             return Ok("User created successfully!");
@@ -59,14 +59,33 @@ namespace LibraryAPI.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] UserIn userIn)
         {
+            User? user = await service.GetUser(id.ToString());
+            if (user != null)
+            {
+                user.FirstName = userIn.FirstName;
+                user.LastName = userIn.LastName;
+                user.UserName = userIn.UserName;
+                user.Email = userIn.Email;
+                user.PhoneNumber = userIn.PhoneNumber;
+                await service.UpdateUser(user);
+                return Ok("User updated successfully!");
+            }
+            return NotFound();
         }
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            User? user = await service.GetUser(id);
+            if (user != null)
+            {
+                await service.DeleteUser(user);
+                return Ok("User deleted successfully!");
+            }
+            return NotFound();
         }
     }
 }

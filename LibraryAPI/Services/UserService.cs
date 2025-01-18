@@ -5,23 +5,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryAPI.Services
 {
-    public class UserService(UserManager<User> _usermanager)
+    public class UserService(UserManager<User> usermanager)
     {
         public async Task<IEnumerable<User>> GetUsers()
         {
-            IEnumerable<User> users = await _usermanager.Users.ToListAsync();
+            IEnumerable<User> users = await usermanager.Users.ToListAsync();
             return users;
         }
 
         public async Task<User?> GetUser(string id)
         {
-            User? user = await _usermanager.FindByIdAsync(id);
+            User? user = await usermanager.FindByIdAsync(id);
             return user;
         }
 
         public async Task CreateUser(User user)
         {
-            await _usermanager.CreateAsync(user);
+            await usermanager.CreateAsync(user);
+        }
+
+        public async Task UpdateUser(User user)
+        {
+            await usermanager.UpdateAsync(user);
+        }
+
+        public async Task DeleteUser(User user)
+        {
+            await usermanager.DeleteAsync(user);
         }
     }
 }

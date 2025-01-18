@@ -1,22 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using LibraryAPI.Data.Enums;
 using LibraryAPI.DTO.BookDTOs;
 
 namespace LibraryAPI.Data.Validators
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class PageCountValidator : ValidationAttribute
+    public class BookCountValidator : ValidationAttribute
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            if (value is BookIn book) { 
-                if (book.PageCount < 1)
+            if (value is BookIn book)
+            {
+                if (book.NumAvailable > book.NumTotal)
                 {
-                    return new ValidationResult("Page count must be greater than 0.");
+                    return new ValidationResult("Number of available books cannot be greater than the total number of books.");
                 }
-                else if (book.Genre == BookGenre.Poetry && book.PageCount > 100)
+                else if (book.NumAvailable < 0 || book.NumTotal < 0)
                 {
-                    return new ValidationResult("Poetry books cannot have more than 100 pages.");
+                    return new ValidationResult("Number of books cannot be negative.");
                 }
             }
             return ValidationResult.Success;
