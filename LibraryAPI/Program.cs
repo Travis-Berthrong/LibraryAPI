@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using LibraryAPI.Areas.Identity.Data;
 using LibraryAPI.Data;
 using LibraryAPI.Services;
+using LibraryAPI.Data.BookData;
 
 namespace LibraryAPI
 {
@@ -11,9 +12,10 @@ namespace LibraryAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
-
-            builder.Services.AddDbContext<AuthContext>(options => options.UseSqlServer(connectionString));
+            var authConnectionString = builder.Configuration.GetConnectionString("AuthContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthContextConnection' not found.");
+            var bookConnectionString = builder.Configuration.GetConnectionString("BookContextConnection") ?? throw new InvalidOperationException("Connection string 'BookContextConnection' not found.");
+            builder.Services.AddDbContext<AuthContext>(options => options.UseSqlServer(authConnectionString));
+            builder.Services.AddDbContext<BookDataContext>(options => options.UseSqlServer(bookConnectionString));
 
             builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AuthContext>();
 

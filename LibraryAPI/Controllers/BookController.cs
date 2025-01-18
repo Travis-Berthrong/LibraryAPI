@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibraryAPI.Data;
+using LibraryAPI.DTO.BookDTOs;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,9 +26,9 @@ namespace LibraryAPI.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
-        public string Post([FromBody] Book book)
+        public string Post([FromBody] BookIn bookInDto)
         {
-            Console.WriteLine(book);
+            Console.WriteLine(bookInDto);
             return "Book saved successfully!";
         }
 
