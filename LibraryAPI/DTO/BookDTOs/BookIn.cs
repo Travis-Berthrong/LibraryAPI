@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using LibraryAPI.Data.Enums;
 using LibraryAPI.Data.Validators;
 
 namespace LibraryAPI.DTO.BookDTOs
@@ -21,8 +20,8 @@ namespace LibraryAPI.DTO.BookDTOs
         [Required]
         public int PageCount { get; set; }
 
-        [Required]
-        public BookGenre Genre { get; set; }
+        [Required, BookGenreValidator]
+        public string Genre { get; set; } = null!;
 
         [Required]
         public int NumAvailable { get; set; }

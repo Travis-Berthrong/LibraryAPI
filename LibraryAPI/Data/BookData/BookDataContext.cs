@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LibraryAPI.DTO.ReservationDTOs;
 using LibraryAPI.Entities.BookDataEntities;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,8 +19,6 @@ public partial class BookDataContext : DbContext
 
     public virtual DbSet<Book> Books { get; set; }
 
-    public virtual DbSet<Reservation> Reservations { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Book>(entity =>
@@ -31,23 +30,24 @@ public partial class BookDataContext : DbContext
             entity.Property(e => e.NumAvailable).HasColumnName("numAvailable");
             entity.Property(e => e.NumTotal).HasColumnName("numTotal");
             entity.Property(e => e.Title).HasMaxLength(100);
-        });
+            entity.OwnsMany(e => e.Reservations, entity =>
+            {
+                entity.ToTable("Reservations");
+                entity.HasKey(e => e.Id).HasName("PK__Reservat__3214EC07F7BF1BAA");
 
-        modelBuilder.Entity<Reservation>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Reservat__3214EC07F7BF1BAA");
+                entity.Property(e => e.ReservationStatus)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
-            entity.Property(e => e.ReservationStatus)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.UserId)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+                entity.HasOne(d => d.Book).WithMany(p => p.Reservations)
+                    .HasForeignKey(d => d.BookId)
+                    .OnDelete(DeleteBehavior.ClientCascade)
+                    .HasConstraintName("FK_Reservations_Books");
 
-            entity.HasOne(d => d.Book).WithMany(p => p.Reservations)
-                .HasForeignKey(d => d.BookId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Reservations_Books");
+            });
         });
 
         OnModelCreatingPartial(modelBuilder);

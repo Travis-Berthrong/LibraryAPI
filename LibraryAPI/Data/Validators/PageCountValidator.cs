@@ -14,7 +14,7 @@ namespace LibraryAPI.Data.Validators
                 {
                     return new ValidationResult("Page count must be greater than 0.");
                 }
-                else if (book.Genre == BookGenre.Poetry && book.PageCount > 100)
+                else if (book.Genre == BookGenre.Poetry.ToString() && book.PageCount > 100)
                 {
                     return new ValidationResult("Poetry books cannot have more than 100 pages.");
                 }

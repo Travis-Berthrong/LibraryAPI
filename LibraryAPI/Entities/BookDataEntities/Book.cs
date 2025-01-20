@@ -18,11 +18,21 @@ public partial class Book
 
     public int PageCount { get; set; }
 
-    public BookGenre Genre { get; set; }
+    public BookGenre Genre;
 
     public int NumAvailable { get; set; }
 
     public int NumTotal { get; set; }
 
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+
+    public String getGenre()
+    {
+        return Genre.ToString();
+    }
+
+    public void setGenre(String genre)
+    {
+        Genre = (BookGenre)Enum.Parse(typeof(BookGenre), genre);
+    }
 }

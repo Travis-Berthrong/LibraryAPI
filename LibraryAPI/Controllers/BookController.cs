@@ -2,6 +2,7 @@
 using LibraryAPI.DTO.BookDTOs;
 using LibraryAPI.Services;
 using LibraryAPI.Entities.BookDataEntities;
+using System.ComponentModel.DataAnnotations;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,7 +28,7 @@ namespace LibraryAPI.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get([Required] int id)
         {
             Book? book = await bookService.GetBook(id);
             if (book != null)
@@ -49,10 +50,10 @@ namespace LibraryAPI.Controllers
                 Description = bookInDto.Description,
                 PublicationDate = bookInDto.PublicationDate,
                 PageCount = bookInDto.PageCount,
-                Genre = bookInDto.Genre,
                 NumAvailable = bookInDto.NumAvailable,
                 NumTotal = bookInDto.NumTotal
             };
+            book.setGenre(bookInDto.Genre);
             await bookService.CreateBook(book);
             return Ok("Book created successfully!");
 
@@ -60,7 +61,7 @@ namespace LibraryAPI.Controllers
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] BookIn bookdto)
+        public async Task<IActionResult> Put([Required] int id, [FromBody] BookIn bookdto)
         {
             Book? book = await bookService.GetBook(id);
             if (book == null)
@@ -72,16 +73,16 @@ namespace LibraryAPI.Controllers
             book.Description = bookdto.Description;
             book.PublicationDate = bookdto.PublicationDate;
             book.PageCount = bookdto.PageCount;
-            book.Genre = bookdto.Genre;
             book.NumAvailable = bookdto.NumAvailable;
             book.NumTotal = bookdto.NumTotal;
+            book.setGenre(bookdto.Genre);
             await bookService.UpdateBook(book);
             return Ok("Book updated successfully!");
         }
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([Required] int id)
         {
             Book? book = await bookService.GetBook(id);
             if (book == null)

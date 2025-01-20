@@ -16,7 +16,17 @@ public partial class Reservation
 
     public DateOnly? ReturnDate { get; set; }
 
-    public ReservationStatus ReservationStatus { get; set; }
+    public ReservationStatus ReservationStatus;
 
     public virtual Book Book { get; set; } = null!;
+
+    public String getReservationStatus()
+    {
+        return ReservationStatus.ToString();
+    }
+    public void setReservationStatus(String status)
+    {
+        ReservationStatus = (ReservationStatus)Enum.Parse(typeof(ReservationStatus), status);
+    }
+
 }

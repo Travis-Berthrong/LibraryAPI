@@ -9,13 +9,13 @@ namespace LibraryAPI.Services
     {
         public async Task<IEnumerable<User>> GetUsers()
         {
-            IEnumerable<User> users = await usermanager.Users.ToListAsync();
+            var users = await usermanager.Users.ToListAsync();
             return users;
         }
 
         public async Task<User?> GetUser(string id)
         {
-            User? user = await usermanager.FindByIdAsync(id);
+            var user = await usermanager.FindByIdAsync(id);
             return user;
         }
 

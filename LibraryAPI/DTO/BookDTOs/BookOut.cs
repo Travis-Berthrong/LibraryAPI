@@ -11,7 +11,7 @@ namespace LibraryAPI.DTO.BookDTOs
         public string? Description { get; set; } = book.Description;
         public DateOnly PublicationDate { get; set; } = book.PublicationDate;
         public int PageCount { get; set; } = book.PageCount;
-        public BookGenre Genre { get; set; } = book.Genre;
+        public string Genre { get; set; } = book.getGenre();
         public int NumAvailable { get; set; } = book.NumAvailable;
         public int NumTotal { get; set; } = book.NumTotal;
     }
