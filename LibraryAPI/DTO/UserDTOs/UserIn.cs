@@ -15,6 +15,7 @@ namespace LibraryAPI.DTO.UserDTOs
         [Required]
         public required string PhoneNumber { get; set; }
 
-        public string? Password { get; set; }
+        [Required]
+        public required string Password { get; set; }
     }
 }

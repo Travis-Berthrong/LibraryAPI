@@ -1,5 +1,4 @@
-﻿using LibraryAPI.Areas.Identity.Data;
-using LibraryAPI.Data;
+﻿using LibraryAPI.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +8,7 @@ namespace LibraryAPI.Services
     {
         public async Task<IEnumerable<User>> GetUsers()
         {
-            var users = await usermanager.Users.ToListAsync();
+            var users = await usermanager.Users.ToArrayAsync();
             return users;
         }
 
@@ -19,9 +18,9 @@ namespace LibraryAPI.Services
             return user;
         }
 
-        public async Task CreateUser(User user)
+        public async Task CreateUser(User user, string password)
         {
-            await usermanager.CreateAsync(user);
+            await usermanager.CreateAsync(user, password);
         }
 
         public async Task UpdateUser(User user)

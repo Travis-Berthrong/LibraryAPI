@@ -20,13 +20,16 @@ public partial class Reservation
 
     public virtual Book Book { get; set; } = null!;
 
-    public String getReservationStatus()
+    public string getReservationStatus()
     {
         return ReservationStatus.ToString();
     }
-    public void setReservationStatus(String status)
+    public void setReservationStatus(string status)
     {
-        ReservationStatus = (ReservationStatus)Enum.Parse(typeof(ReservationStatus), status);
+        if (Enum.TryParse(status, out ReservationStatus reservationStatus))
+        {
+            ReservationStatus = reservationStatus;
+        }
     }
 
 }

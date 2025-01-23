@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using LibraryAPI.Data.Enums;
 
 namespace LibraryAPI.Data.Validators
 {
@@ -9,9 +10,11 @@ namespace LibraryAPI.Data.Validators
         {
             if (value is string status)
             {
-                if (status != "Returned" && status != "Overdue" && status != "CheckedOut" && status != "OnHold")
+                bool isValid = Enum.TryParse(status, out ReservationStatus reservationStatus);
+                if (!isValid)
                 {
-                    return new ValidationResult("Invalid reservation status.");
+                    string validStatuses = string.Join(", ", Enum.GetNames(typeof(ReservationStatus)));
+                    return new ValidationResult($"Reservation status must be one of the following values: {validStatuses}");
                 }
             }
             return ValidationResult.Success;

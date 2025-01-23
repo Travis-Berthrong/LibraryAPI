@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using LibraryAPI.DTO.ReservationDTOs;
-using LibraryAPI.Entities.BookDataEntities;
+﻿using LibraryAPI.Entities.BookDataEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryAPI.Data.BookData;

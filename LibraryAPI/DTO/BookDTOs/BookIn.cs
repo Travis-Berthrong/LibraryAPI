@@ -12,7 +12,7 @@ namespace LibraryAPI.DTO.BookDTOs
         [Required]
         public string Author { get; set; } = null!;
 
-        public string Description { get; set; } = "";
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         public DateOnly PublicationDate { get; set; }

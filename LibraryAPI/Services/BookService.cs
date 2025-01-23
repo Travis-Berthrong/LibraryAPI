@@ -8,7 +8,7 @@ namespace LibraryAPI.Services
     {
         public async Task<IEnumerable<Book>> GetBooks()
         {
-            IEnumerable<Book> books = await _context.Books.ToListAsync();
+            IEnumerable<Book> books = await _context.Books.ToArrayAsync();
             return books;
         }
         public async Task<Book?> GetBook(int id)

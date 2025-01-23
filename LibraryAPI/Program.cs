@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LibraryAPI.Areas.Identity.Data;
 using LibraryAPI.Data;

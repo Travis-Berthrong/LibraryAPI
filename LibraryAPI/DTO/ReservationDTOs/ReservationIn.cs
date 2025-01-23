@@ -21,7 +21,7 @@ namespace LibraryAPI.DTO.ReservationDTOs
         public DateOnly? ReturnDate { get; set; }
 
         [Required, ReservationStatusValidator]
-        public String ReservationStatus { get; set; } = null!;
+        public string ReservationStatus { get; set; } = null!;
 
     }
 }

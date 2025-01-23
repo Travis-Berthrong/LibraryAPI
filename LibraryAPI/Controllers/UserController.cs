@@ -2,7 +2,6 @@
 using LibraryAPI.DTO.UserDTOs;
 using LibraryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,13 +17,13 @@ namespace LibraryAPI.Controllers
         public async Task<IActionResult> Get()
         {
             IEnumerable<User> users = await service.GetUsers();
-            List<UserOut> users_out = new List<UserOut>();
+            List<UserOut> usersOut = new List<UserOut>();
             foreach (User user in users)
             {
-                UserOut user_out = new UserOut(user);
-                users_out.Add(user_out);
+                UserOut userOut = new UserOut(user);
+                usersOut.Add(userOut);
             }
-            return Ok(users_out);
+            return Ok(usersOut);
         }
 
         // GET api/<UserController>/5
@@ -53,7 +52,7 @@ namespace LibraryAPI.Controllers
                 Email = userIn.Email,
                 PhoneNumber = userIn.PhoneNumber
             };
-            await service.CreateUser(user);
+            await service.CreateUser(user, userIn.Password);
             return Ok("User created successfully!");
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using LibraryAPI.Data.Enums;
 
 namespace LibraryAPI.Entities.BookDataEntities;
@@ -17,6 +18,7 @@ public partial class Book
     public DateOnly PublicationDate { get; set; }
 
     public int PageCount { get; set; }
+    [NotMapped]
 
     public BookGenre Genre;
 
@@ -26,13 +28,16 @@ public partial class Book
 
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
-    public String getGenre()
+    public string getGenre()
     {
         return Genre.ToString();
     }
 
-    public void setGenre(String genre)
+    public void setGenre(string genre)
     {
-        Genre = (BookGenre)Enum.Parse(typeof(BookGenre), genre);
+        if (Enum.TryParse(genre, out BookGenre bookGenre))
+        {
+            Genre = bookGenre;
+        }
     }
 }

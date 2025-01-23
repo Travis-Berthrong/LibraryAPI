@@ -18,7 +18,7 @@ namespace LibraryAPI.DTO.ReservationDTOs
 
         public DateOnly? ReturnDate { get; set; }
 
-        public String ReservationStatus { get; set; } = null!;
+        public string ReservationStatus { get; set; } = null!;
 
         public virtual BookOut Book { get; set; } = null!;
 

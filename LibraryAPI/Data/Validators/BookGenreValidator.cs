@@ -13,8 +13,7 @@ namespace LibraryAPI.Data.Validators
 
             string genreValue = value.ToString()!;
 
-            bool isValid = Enum.GetNames(typeof(BookGenre))
-                              .Any(x => x.Equals(genreValue, StringComparison.OrdinalIgnoreCase));
+            bool isValid = Enum.TryParse(genreValue, out BookGenre genre);
 
             if (!isValid)
             {
